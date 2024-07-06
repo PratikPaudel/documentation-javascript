@@ -1,14 +1,3 @@
-name: CI
-
-on:
-  push:
-    branches:
-      - master
-      - main
-
-permissions:
-  contents: write
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -37,15 +26,13 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_PAT }}  
-
-      - name: Publish Docker Compose services to GitHub Container Registry
-        run: |
-          docker-compose push
+          password: ${{ secrets.GHCR_PAT }}
 
       - name: Run MkDocs container
         run: |
-          docker run --rm -v ${GITHUB_WORKSPACE}:/docs squidfunk/mkdocs-material build --strict
+          docker run --rm -v ${GITHUB_WORKSPACE}:/docs squidfunk/mkdocs-material build --clean --strict
+          # Ensure correct permissions for the built files
+          sudo chown -R $USER:$USER ${GITHUB_WORKSPACE}/site
 
       - name: Deploy to GitHub Pages
         run: |
