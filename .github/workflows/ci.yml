@@ -34,20 +34,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_PAT }}  
-          
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}/mkdocs-material:latest
-
-      - name: Run MkDocs container
-        run: |
-          docker run --rm -v ${GITHUB_WORKSPACE}:/docs squidfunk/mkdocs-material build --strict
-
-      - name: Deploy to GitHub Pages
-        run: |
-          pip install mkdocs-material
-          pip install pillow cairosvg
-          mkdocs gh-deploy --force
+          tags: ghcr.io/${{ github.repository_owner }}/${{ github.repository_name }}/mkdocs-material:latest
