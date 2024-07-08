@@ -34,7 +34,7 @@ function showThis() {
 showThis(); // Output: global object (or `undefined` in strict mode)
 ```
 - Arrow Functions: Arrow functions do not have their own this. Instead, this is lexically inherited from the surrounding function at the time the arrow function is created.
-```javascript linenums=1
+```javascript "linenums=1"
 const rabbit = {
     birthYear: 2020,
     calculateAge: function() {
@@ -48,12 +48,10 @@ const rabbit = {
 rabbit.calculateAge(); // Output: { birthYear: 2020, ... }
 ```
 - Event Listener: In an event listener, this refers to the element that received the event.
-```javascript linenums=1
-<script>
+```javascript "linenums=1"
 document.getElementById('myButton').addEventListener('click', function() {
     console.log(this); // `this` refers to the button element
     this.style.backgroundColor = 'blue';
 });
-</script>
 ```
  
